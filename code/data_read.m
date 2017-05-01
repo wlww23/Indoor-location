@@ -54,4 +54,4 @@ for i = 1:N
     cavgrss = crss / c;
     radiomapdata{y + 1, x + 1} = [aavgrss, bavgrss, cavgrss]; 
 end
-save radiomapdata radiomapdata;
+save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_radiomapdata.mat')), 'radiomapdata');
