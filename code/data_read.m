@@ -22,8 +22,8 @@ radiomapdata = cell(1,1);
 
 for i = 1:N
     [pathstr, name, ext] = fileparts(fileFullName{i});
-    x = str2double(cell2mat(regexp(name, '(?<=[a-z])\d', 'match')));
-    y = str2double(cell2mat(regexp(name, '(?<=[a-z][0-9])\d{1,2}', 'match')));
+    y = str2double(cell2mat(regexp(name, '(?<=[a-z])\d', 'match')));
+    x = str2double(cell2mat(regexp(name, '(?<=[a-z][0-9])\d{1,2}', 'match')));
     %tempmatFullName = fullfile(pathstr, strcat(name, '.mat'));
     fidin = fopen(fileFullName{i}, 'r'); %读取原始数据文件
     a = 0; b = 0; c = 0; invalid = 0; arss = 0; brss = 0; crss = 0;
@@ -52,6 +52,6 @@ for i = 1:N
     aavgrss = arss / a;
     bavgrss = brss / b;
     cavgrss = crss / c;
-    radiomapdata{x + 1, y + 1} = [aavgrss, bavgrss, cavgrss]; 
+    radiomapdata{y + 1, x + 1} = [aavgrss, bavgrss, cavgrss]; 
 end
 save radiomapdata radiomapdata;
