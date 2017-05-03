@@ -16,7 +16,9 @@ end
 amac = '00-02-2A-00-2C-D2';
 bmac = '00-02-2A-03-C2-28';
 cmac = '00-02-2A-03-C2-58';
-radiomapdata = cell(1,1);
+a_Area_ap_a_rawdata = cell(1,1);
+a_Area_ap_b_rawdata = cell(1,1);
+a_Area_ap_c_rawdata = cell(1,1);
 %matFullName = fullfile(filePath, 'radiomapdata.mat'); 
 %fidtemp = fopen(matFullName,'w'); %创建数据文件
 
@@ -26,7 +28,7 @@ for i = 1:N
     x = str2double(cell2mat(regexp(name, '(?<=[a-z][0-9])\d{1,2}', 'match')));
     %tempmatFullName = fullfile(pathstr, strcat(name, '.mat'));
     fidin = fopen(fileFullName{i}, 'r'); %读取原始数据文件
-    a = 0; b = 0; c = 0; invalid = 0; arss = 0; brss = 0; crss = 0;
+    a = 0; b = 0; c = 0; invalid = 0; arss = []; brss = []; crss = [];
     while ~feof(fidin) % 判断是否为文件末尾
         tline = fgetl(fidin); % 从文件读入一行文本（不含回车键）
         if ~isempty(tline) % 判断是否空行
@@ -36,22 +38,23 @@ for i = 1:N
                 switch mac
                     case amac
                         a = a + 1;
-                        arss = arss + rss;
+                        arss = [arss rss];
                     case bmac
                         b = b + 1;
-                        brss = brss + rss;
+                        brss = [brss rss];
                     case cmac
                         c = c + 1;
-                        crss = crss + rss;
+                        crss = [crss rss];
                     otherwise
                         invalid = invalid + 1;
                 end
             end
         end
     end
-    aavgrss = arss / a;
-    bavgrss = brss / b;
-    cavgrss = crss / c;
-    radiomapdata{y + 1, x + 1} = [aavgrss, bavgrss, cavgrss]; 
+    a_Area_ap_a_rawdata{y + 1, x + 1} = arss; 
+    a_Area_ap_b_rawdata{y + 1, x + 1} = brss; 
+    a_Area_ap_c_rawdata{y + 1, x + 1} = crss; 
 end
-save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_radiomapdata.mat')), 'radiomapdata');
+save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_Area_ap_a_rawdata.mat')), 'a_Area_ap_a_rawdata');
+save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_Area_ap_b_rawdata.mat')), 'a_Area_ap_b_rawdata');
+save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_Area_ap_c_rawdata.mat')), 'a_Area_ap_c_rawdata');

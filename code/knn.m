@@ -2,21 +2,21 @@ clc;clear;close all;
 %----------- load -----------%
 map = openfig('map.fig','reuse');
 load('testpoints');
-load('a_radiomapdata');
+load('a_radiomapdata_mean');
 apqty = 3;
 k = 3;
 result = cell(1,1);
 %----------- knn -----------%
 testqty = size(testpoints, 2);
-tempcell = cell(size(a_radiomapdata));
+tempcell = cell(size(a_radiomapdata_mean));
 for i = 1:testqty
     %----------- 计算欧式距离 -----------%
     tempcell(:,:) = {testpoints{i}(2,:)};
-    EuclideanDistancecell = cellfun(@(x,y) (x - y).^2, a_radiomapdata, tempcell, 'UniformOutput', false);
+    EuclideanDistancecell = cellfun(@(x,y) (x - y).^2, a_radiomapdata_mean, tempcell, 'UniformOutput', false);
     EuclideanDistance = sqrt(cellfun(@sum, EuclideanDistancecell));
     %----------- 计算定位结果 -----------%
     [sorted, index] = sort(EuclideanDistance(:));
-    [y_index, x_index] = ind2sub(size(a_radiomapdata), index);
+    [y_index, x_index] = ind2sub(size(a_radiomapdata_mean), index);
     y_knn = sum(y_index(1:k)) / k;
     x_knn = sum(x_index(1:k)) / k;
     result{i} = [x_knn y_knn]; 
