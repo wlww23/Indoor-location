@@ -11,6 +11,6 @@ for i = 1:apqty
         x = 1:size(y, 2);
         subplot(2,2,j); plot(x,y);title(['RSSI”Îæ‡¿ÎπÿœµÕº(AP',num2str(i),')']);
         xlabel('Distance');
-        ylabel('RSSI(db)');
+        ylabel('Mean RSSI(db)');
     end
 end
