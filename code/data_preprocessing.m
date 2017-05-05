@@ -9,6 +9,8 @@ i = floor(m * n * rand(1));
 x1 = 1:length(a_Area_ap_a_rawdata{i});
 y1 = a_Area_ap_a_rawdata{i};
 figure(1);plot(x1, y1, x1, ones(1,length(x1))*sum(y1)/length(y1), '-r');axis([0 length(x1) (min(y1)-10) (max(y1)+10)]);title('RSSI');
+xlabel('N');
+ylabel('RSSI(db)');
 
 ap_a_dev = cell2mat(cellfun(@std, a_Area_ap_a_rawdata, 'UniformOutput', false));
 figure(2);
