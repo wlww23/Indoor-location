@@ -1,11 +1,4 @@
 clc;clear;close all;
+%----------- load -----------%
 load('a_Area_ap_a_rawdata');
-dev = cellfun(@std, a_Area_ap_a_rawdata, 'UniformOutput', false);
-avg = cellfun(@mean, a_Area_ap_a_rawdata, 'UniformOutput', false);
-min = cellfun(@(x,y) x - y, avg, dev, 'UniformOutput', false);
-max = cellfun(@(x,y) x + y, avg, dev, 'UniformOutput', false);
-index = cellfun(@(x,y,z) find((y<=x)&(x<=z)), a_Area_ap_a_rawdata, min, max, 'UniformOutput', false);
-filtered = cellfun(@(x,y) x(y), a_Area_ap_a_rawdata, index, 'UniformOutput', false);
-absrssi= cellfun(@abs, filtered, 'UniformOutput', false);
-geomeanrssi = cellfun(@geomean, absrssi, 'UniformOutput', false);
-result = cellfun(@(x) -x, geomeanrssi, 'UniformOutput', false);
+ap_a = Kalmanfilter(a_Area_ap_a_rawdata);
