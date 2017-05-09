@@ -92,7 +92,48 @@ for i = 1:N
                 warndlg('数据有误','error'); 
         end
         testpoints{i} = [a b c; aavgrss, bavgrss, cavgrss; xreal yreal 0]; 
-    elseif strcmp(cell2mat(regexp(name, 'point', 'match')), 'path')
+    elseif strcmp(cell2mat(regexp(name, 'path', 'match')), 'path')
+        fidin = fopen(fileFullName{i}, 'r');
+        testpath = cell(1,1);
+        k = 1; lasttime = 1; a = 0; b = 0; c = 0; arss = 0; brss = 0; crss = 0; xreal = 0; yreal = 0;
+        while ~feof(fidin)
+            tline = fgetl(fidin); % 从文件读入一行文本（不含回车键）
+            mac = cell2mat(regexp(tline, '00-02-2A-00-2C-D2|00-02-2A-03-C2-28|00-02-2A-03-C2-58', 'match'));
+            if ~isempty(tline) && ~isempty(mac) % 判断是否空行且有无mac地址
+                rss = str2double(cell2mat(regexp(tline, ',-[0-9][0-9],', 'match')));
+                time = str2double(cell2mat(regexp(tline, '^[0-9]{1,}', 'match')));
+                if time == lasttime
+                    switch mac
+                        case amac
+                            a = a + 1;
+                            arss = arss + rss;
+                        case bmac
+                            b = b + 1;
+                            brss = brss + rss;
+                        case cmac
+                            c = c + 1;
+                            crss = crss + rss;
+                    end
+                else
+                    testpath{1, k} = [arss / a, brss / b, crss / c];
+                    a = 0; b = 0; c = 0; arss = 0; brss = 0; crss = 0;
+                    lasttime = time;
+                    k = k + 1;
+                    switch mac
+                        case amac
+                            a = a + 1;
+                            arss = arss + rss;
+                        case bmac
+                            b = b + 1;
+                            brss = brss + rss;
+                        case cmac
+                            c = c + 1;
+                            crss = crss + rss;
+                    end                    
+                end                  
+            end
+        end
+        testpath{1, k} = [arss / a, brss / b, crss / c];
     end
 end
-save('testpoints.mat', 'testpoints');
+save('testpath.mat', 'testpath');
