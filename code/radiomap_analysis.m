@@ -14,3 +14,15 @@ for i = 1:apqty
         ylabel('Gauss filtered RSSI(db)');
     end
 end
+
+for m = 1:apqty
+    figure(m);
+    temp = cellfun(@(x) x(m), a_radiomapdata_kalman, 'UniformOutput', false);
+    for n = 1:size(a_radiomapdata_kalman,1)
+        y = cell2mat(temp(n,:));
+        x = 1:size(y, 2);
+        subplot(2,2,n); plot(x,y);title(['RSSI”Îæ‡¿ÎπÿœµÕº(AP',num2str(m),')']);
+        xlabel('Distance');
+        ylabel('Gauss filtered RSSI(db)');
+    end
+end
