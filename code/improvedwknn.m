@@ -1,11 +1,11 @@
 clc;clear;close all;
 %-------- load & init--------%
 map = openfig('map.fig','reuse');
-load('testpath');
+load('testpoints');
 load('a_radiomapdata_kalman');
 apqty = 3;
 k = 3;
-weight = 1;
+weight = 0.8;
 result = cell(1,1);
 lastpoint = a_radiomapdata_kalman{1};
 %-------improved wknn -------%
