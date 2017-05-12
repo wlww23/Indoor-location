@@ -31,8 +31,14 @@ figure(2);plot(x_geo, yx_geo, x_geo, yy_geo, '-r', x_geo, yz_geo, '-g');title('µ
 xlabel('samples');
 ylabel('accelerate(m^2\cdot s^{-1})');
 
+accl_carry_amp = cellfun(@norm, rawdata_accl, 'UniformOutput', false);
+accl_removegravity_amp = cell2mat(cellfun(@(x) (x - 1) * 9.80665, accl_carry_amp, 'UniformOutput', false));
+figure(3);plot(x_geo, accl_removegravity_amp);title('µØÀí×ø±êÏÂ¼ÓËÙ¶È·ùÖµ');
+xlabel('samples');
+ylabel('accelerate(m^2\cdot s^{-1})');
+
 accl_amp = cell2mat(cellfun(@norm, accl_geo, 'UniformOutput', false));
-figure(3);plot(x_geo, accl_amp);title('µØÀí×ø±êÏÂ¼ÓËÙ¶È·ùÖµ');
+figure(4);plot(x_geo, accl_amp);title('µØÀí×ø±êÏÂ¼ÓËÙ¶È·ùÖµ');
 xlabel('samples');
 ylabel('accelerate(m^2\cdot s^{-1})');
 
@@ -40,3 +46,8 @@ ylabel('accelerate(m^2\cdot s^{-1})');
 [pks, locs] = findpeaks(accl_amp, 'minpeakdistance', 3, 'minpeakheight', 1.5);
 stepnum = length(pks)
 hold on; plot(x_geo(locs), pks + 0.05, 'k^');
+
+%---- step size estimation ----%
+for i = 1:(length(pks) - 1)
+    locs(i+1) - locs(i)
+end
