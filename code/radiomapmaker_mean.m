@@ -16,7 +16,7 @@ end
 amac = '00-02-2A-00-2C-D2';
 bmac = '00-02-2A-03-C2-28';
 cmac = '00-02-2A-03-C2-58';
-c_radiomapdata_mean2 = cell(1,1);
+b_radiomapdata_mean = cell(1,1);
 %matFullName = fullfile(filePath, 'radiomapdata.mat'); 
 %fidtemp = fopen(matFullName,'w'); %创建数据文件
 
@@ -52,6 +52,6 @@ for i = 1:N
     aavgrss = arss / a;
     bavgrss = brss / b; 
     cavgrss = crss / c;
-    c_radiomapdata_mean2{y + 1, x + 1} = [aavgrss, bavgrss, cavgrss]; 
+    b_radiomapdata_mean{y + 1, x + 1} = [aavgrss, bavgrss, cavgrss]; 
 end
-save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_radiomapdata_mean2.mat')), 'c_radiomapdata_mean2');
+save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_radiomapdata_mean.mat')), 'b_radiomapdata_mean');

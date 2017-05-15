@@ -16,9 +16,9 @@ end
 amac = '00-02-2A-00-2C-D2';
 bmac = '00-02-2A-03-C2-28';
 cmac = '00-02-2A-03-C2-58';
-a_Area_ap_a_rawdata = cell(1,1);
-a_Area_ap_b_rawdata = cell(1,1);
-a_Area_ap_c_rawdata = cell(1,1);
+c_Area_ap_a_rawdata = cell(1,1);
+c_Area_ap_b_rawdata = cell(1,1);
+c_Area_ap_c_rawdata = cell(1,1);
 %matFullName = fullfile(filePath, 'radiomapdata.mat'); 
 %fidtemp = fopen(matFullName,'w'); %创建数据文件
 
@@ -51,10 +51,10 @@ for i = 1:N
             end
         end
     end
-    a_Area_ap_a_rawdata{y + 1, x + 1} = arss; 
-    a_Area_ap_b_rawdata{y + 1, x + 1} = brss; 
-    a_Area_ap_c_rawdata{y + 1, x + 1} = crss; 
+    c_Area_ap_a_rawdata{y + 1, x + 1} = arss;
+    c_Area_ap_b_rawdata{y + 1, x + 1} = brss; 
+    c_Area_ap_c_rawdata{y + 1, x + 1} = crss; 
 end
-save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_Area_ap_a_rawdata.mat')), 'a_Area_ap_a_rawdata');
-save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_Area_ap_b_rawdata.mat')), 'a_Area_ap_b_rawdata');
-save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_Area_ap_c_rawdata.mat')), 'a_Area_ap_c_rawdata');
+save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_Area_ap_a_rawdata.mat')), 'c_Area_ap_a_rawdata');
+save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_Area_ap_b_rawdata.mat')), 'c_Area_ap_b_rawdata');
+save(cell2mat(strcat(regexp(name, '[a-z]', 'match'), '_Area_ap_c_rawdata.mat')), 'c_Area_ap_c_rawdata');
