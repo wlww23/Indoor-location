@@ -1,4 +1,4 @@
-function [pdrtime, Ssize] = PDR(rawdata_accl, rawdata_attitude)
+function [pdrtime, Ssize, Svelocity] = PDR(rawdata_accl, rawdata_attitude)
 %------------ init ------------%
 gravity_geo = cell(size(rawdata_accl(2,:)));
 %- coordinate transformation -%
@@ -25,6 +25,7 @@ for i = 1:(length(pks) - 1)
     Sf = 10 / (locs(i+1) - locs(i) + 1);
     Ss = -0.044057003564490 * Sf + 0.737680934225466;
     Ssize(i) = Ss;
+    Svelocity(i) = Ss / Sf;
     distance = distance + Ss;
 end
 pdrtime = rawdata_accl(1,(locs));

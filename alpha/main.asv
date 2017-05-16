@@ -10,7 +10,7 @@ wifiresult = Improvedwknn(rawdata_wifi, radiomap_kalman);
 [a,locs] = ismember(wifiresult(1,:), pdrtime);
 n = 0; 
 distance = zeros(1, length(locs));
-velocity = zeros(1, length(locs));
+velocity = zeros(1, length(locs));jmn 
 for i = 1:length(locs)
     if locs(i) ~= 0 && locs(i) ~= 1
         distance(i) = sum(stepsize((n + 1):(locs(i) - 1)));

@@ -18,8 +18,8 @@ for i = 2:length(x)
     %-------- prediction --------%
     costheta = (x(i) - x(i-1)) / d(i);
     sintheta = (y(i) - y(i-1)) / d(i);
-    x_pre = particles(1,:) + d(i) * costheta + normrnd(0.5, 1, [1 N]);
-    y_pre = particles(2,:) + d(i) * sintheta + normrnd(0.5, 1, [1 N]);
+    x_pre = particles(1,:) + d(i) * costheta;
+    y_pre = particles(2,:) + d(i) * sintheta;
     d = particles(3,:) + normrnd(0, 0.5, [1 N]);
     %---------- update ----------%
     distance = arrayfun(@(x,y) sqrt(x^2 + y^2), x_pre - x(i), y_pre - y(i) , 'UniformOutput', true);
