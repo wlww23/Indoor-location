@@ -37,22 +37,22 @@ figure(3);plot(x_geo, accl_removegravity_amp);title('地理坐标下加速度幅值');
 xlabel('samples');
 ylabel('accelerate(m^2\cdot s^{-1})');
 
-accl_amp = cell2mat(cellfun(@norm, accl_geo, 'UniformOutput', false));
-figure(4);plot(x_geo, accl_amp);title('地理坐标下加速度幅值');
-xlabel('samples');
-ylabel('accelerate(m^2\cdot s^{-1})');
+% accl_amp = cell2mat(cellfun(@norm, accl_geo, 'UniformOutput', false));
+% figure(4);plot(x_geo, accl_amp);title('地理坐标下加速度幅值');
+% xlabel('samples');
+% ylabel('accelerate(m^2\cdot s^{-1})');
 
 %------- peak detection -------%
-[pks, locs] = findpeaks(accl_amp, 'minpeakdistance', 3, 'minpeakheight', 1.5);
+[pks, locs] = findpeaks(accl_removegravity_amp, 'minpeakdistance', 3, 'minpeakheight', 0.5);
 stepnum = length(pks) - 1;
 hold on; plot(x_geo(locs), pks + 0.05, 'k^');
 
 %---- step size estimation ----%
-distance = 0;Ssize = [];
+distance = 0; Ssize = zeros(1,(length(pks) - 1));
 for i = 1:(length(pks) - 1)
     Sf = 10 / (locs(i+1) - locs(i) + 1);
-    Ss = -0.546620522647572 * Sf + 1.507080018403940;
-    Ssize = [Ssize Ss];
+    Ss = -0.044057003564490 * Sf + 0.737680934225466;
+    Ssize(i) = Ss;
     distance = distance + Ss;
 end
 time = rawdata_accl(1,(locs));

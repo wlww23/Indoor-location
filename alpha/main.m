@@ -1,8 +1,9 @@
 clc;clear;close all;
+load('rawdata_wifi.mat');
 load('rawdata_accl.mat');
 load('rawdata_attitude.mat');
 load('radiomap_kalman.mat');
-load('testdata.mat');
+
 [pdrtime, stepsize] = PDR(rawdata_accl, rawdata_attitude);
 wifiresult = Improvedwknn(testdata, radiomap);
 [a,locs] = ismember(wifiresult(1,:), pdrtime);

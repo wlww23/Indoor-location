@@ -19,7 +19,7 @@ cmac = '00-02-2A-03-C2-58';
 for i = 1:N
     [pathstr, name, ext] = fileparts(fileFullName{i});
     fidin = fopen(fileFullName{i}, 'r');
-    testdata = cell(1,1);
+    rawdata_wifi = cell(1,1);
     k = 1; lasttime = 1; a = 0; b = 0; c = 0; arss = 0; brss = 0; crss = 0;
     while ~feof(fidin)
         tline = fgetl(fidin); % 从文件读入一行文本（不含回车键）
@@ -41,9 +41,9 @@ for i = 1:N
                         c = c + 1;
                         crss = crss + rss;
                  end
-                 testdata{1, k} = realtime;
+                 rawdata_wifi{1, k} = realtime;
             else
-                 testdata{2, k} = [arss / a, brss / b, crss / c];
+                 rawdata_wifi{2, k} = [arss / a, brss / b, crss / c];
                  a = 0; b = 0; c = 0; arss = 0; brss = 0; crss = 0;
                  lasttime = time;
                  k = k + 1;
@@ -61,6 +61,6 @@ for i = 1:N
              end                  
          end
      end
-     testdata{2, k} = [arss / a, brss / b, crss / c];
-     save('testdata.mat', 'testdata');
+     rawdata_wifi{2, k} = [arss / a, brss / b, crss / c];
+     save('rawdata_wifi.mat', 'rawdata_wifi');
 end
