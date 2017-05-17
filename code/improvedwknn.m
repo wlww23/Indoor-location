@@ -60,18 +60,7 @@ for i = 1:testqty
 end
 
 %----------- 定位结果图 -----------%
-for j = 1:testqty
-    x = result{2,j} - 1;
-    y = result{3,j} - 1;
-    xloc = 80 * x;
-    if y >= 2
-        yloc = 79 + 80 + (y - 2) * 83;
-    elseif y >= 1
-        yloc = 79 + (y - 1) * 80;
-    else
-        yloc = 79 * y;
-    end
-    hold on;
-    scatter(xloc, yloc, 20, 'k');
-    text(xloc, yloc, num2str(j));
-end
+[xreal, yreal] = realposition(cell2mat(result(2:3,:)));   
+hold on;
+scatter(xreal, yreal, 20, 'k');
+text(xreal + 10, yreal, num2cell(1:size(xreal,2)));
