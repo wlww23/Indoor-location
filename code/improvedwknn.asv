@@ -4,7 +4,7 @@ map = openfig('testmap.fig','reuse');
 load('testpoints');
 load('radiomap_kalman');
 k = 3;
-weight = 0.54;
+weight = 0.8;
 result = cell(1,1);
 %-------improved wknn -------%
 testqty = size(testpoints, 2);
@@ -62,15 +62,5 @@ end
 %----------- 定位结果图 -----------%
 [xreal, yreal] = realposition(cell2mat(result(2:3,:)));   
 hold on;
-plot(xreal, yreal, 'k^', 'MarkerSize', 7, 'MarkerFaceColor','k');
-text(xreal + 10, yreal + 10, num2cell(1:size(xreal,2)));
-
-%---------- 计算误差分布 ----------%
-xtest = 0:80:22*80;
-ytest = 79*ones(1,23);
-error_wknnpro = sqrt((xtest/100 - xreal/100).^2 + (ytest/100 - yreal/100).^2);
-save('error_wknnpro', 'error_wknnpro');
-error_avg = mean(error_wknnpro)
-error_std = std(error_wknnpro)
-error_min = min(error_wknnpro)
-error_max = max(error_wknnpro)
+scatter(xreal, yreal, 20, 'k');
+text(xreal + 10, yreal, num2cell(1:size(xreal,2)));

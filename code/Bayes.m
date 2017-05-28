@@ -1,6 +1,6 @@
 clc;clear;close all;
 %----------- init -----------%
-map = openfig('map.fig','reuse');
+map = openfig('testmap.fig','reuse');
 load('testpoints');
 load('a_radiomapdata_kalman');
 load('a_Area_ap_a_rawdata');
@@ -39,21 +39,21 @@ for i = 1:testqty
     [x_index, y_index] = meshgrid(1:n, 1:m);
     x_bayes = sum(sum(x_index .* P_LiS));
     y_bayes = sum(sum(y_index .* P_LiS));
-    result{i} = [x_bayes y_bayes];
+    result{2,i} = x_bayes;
+    result{3,i} = y_bayes;
 end
 %----------- 定位结果图 -----------%
-for j = 1:testqty
-    x = result{j}(1) - 1;
-    y = result{j}(2) - 1;
-    xloc = 80 * x;
-    if y >= 2
-        yloc = 79 + 80 + (y - 2) * 83;
-    elseif y >= 1
-        yloc = 79 + (y - 1) * 80;
-    else
-        yloc = 79 * y;
-    end
-    hold on;
-    scatter(xloc, yloc, 20, 'k');
-    text(xloc, yloc, num2str(j));
-end
+[xreal, yreal] = realposition(cell2mat(result(2:3,:)));   
+hold on;
+plot(xreal, yreal, 'k^', 'MarkerSize', 7, 'MarkerFaceColor','k');
+text(xreal + 10, yreal + 10, num2cell(1:size(xreal,2)));
+
+%---------- 计算误差分布 ----------%
+xtest = 0:80:22*80;
+ytest = 79*ones(1,23);
+error_bayes = sqrt((xtest/100 - xreal/100).^2 + (ytest/100 - yreal/100).^2);
+save('error_bayes', 'error_bayes');
+error_avg = mean(error_bayes)
+error_std = std(error_bayes)
+error_min = min(error_bayes)
+error_max = max(error_bayes)
