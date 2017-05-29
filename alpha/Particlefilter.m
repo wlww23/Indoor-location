@@ -5,22 +5,36 @@
 %N——粒子个数
 function result = Particlefilter(x, y, v, t, N)
 particles = zeros(4,N);
-theta = asin((x(2) - x(1)) / (v(2) * t(2)));
-particles(1,:) = normrnd(x(2), 1, [1 N]);
-particles(2,:) = normrnd(y(2), 1, [1 N]);
-particles(3,:) = normrnd(v(2) * sin(theta), 0.1, [1 N]);%x方向速度
-particles(4,:) = normrnd(v(2) * cos(theta), 0.1, [1 N]);%y方向速度
+k = 1;
+while v(k) == 0
+    x(k) = sum(x(1:k)) / k;
+    y(k) = sum(y(1:k)) / k;
+    k = k + 1;
+end
+if x(k) - x(k-1) > 0
+    theta = pi / 2;
+else
+    theta = -pi / 2;
+end
+% theta = asin((x(2) - x(1)) / (v(2) * t(2)));
+particles(1,:) = normrnd(x(k-1), 1, [1 N]);
+particles(2,:) = normrnd(y(k-1), 1, [1 N]);
+particles(3,:) = normrnd(v(k-1) * sin(theta), 0.01, [1 N]);%x方向速度
+particles(4,:) = normrnd(v(k-1) * cos(theta), 0.01, [1 N]);%y方向速度
 weights = ones(1,N) / N;
 result = zeros(2,length(x));
-result(1,1) = x(1);
-result(2,1) = y(1);
-result(1,2) = x(2);
-result(2,2) = y(2);
-for i = 3:length(x)
+result(1,1) = x(k-1);
+result(2,1) = y(k-1);
+% result(1,2) = x(2);
+% result(2,2) = y(2);
+for i = k:length(x)
     %-------- prediction --------%
     F = [1 0 t(i) 0; 0 1 0 t(i); 0 0 1 0; 0 0 0 1];
     n = [normrnd(0, 1, [1 N]); normrnd(0, 1, [1 N]); normrnd(0, 0.1, [1 N]); normrnd(0, 0.1, [1 N])];
     particles = F * particles + n;
+    for j = 1:100
+        idx = find((particles(1,:) < 0) | (particles(1,:) > 3698) | (particles(2,:) < 0) | ((particles(1,:) >= 0) & (particles(1,:) <= 1760) & (particles(2,:) > 227)) | ((particles(1,:) > 1760) & (particles(1,:) <= 3309) & (particles(2,:) > 335)) | ((particles(1,:) > 3309) & (particles(1,:) <= 3698) & (particles(2,:) > 228)));
+    end
 %     theta = (x(i) - x(i-1)) / v(i);
 %     x_pre = particles(1,:) + v(i-1) * t(i) * cos(theta) + normrnd(0.5, 1, [1 N]);
 %     y_pre = particles(2,:) + v(i-1) * t(i) * sin(theta) + normrnd(0.5, 1, [1 N]);

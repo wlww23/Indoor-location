@@ -14,7 +14,7 @@ for i = 1:testqty
     tempcell(:,:) = {testpoints{i}(2,:)};
     EuclideanDistancecell = cellfun(@(x,y) (x - y).^2, radiomap_kalman, tempcell, 'UniformOutput', false);
     EuclideanDistance = sqrt(cellfun(@sum, EuclideanDistancecell));
-    %----------- 判断目标区域 -----------%
+    %--------- 判断高低权值区域 ---------%
     [sorted, index] = sort(EuclideanDistance(:));
     [y_index, x_index] = ind2sub(size(radiomap_kalman), index);
     y_wknn = sum(y_index(1:k).*(sorted(1:k).^(-1))) / sum(sorted(1:k).^(-1));
