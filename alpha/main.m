@@ -34,6 +34,7 @@ locresult = Particlefilter(cell2mat(wifiresult(2,:)), cell2mat(wifiresult(3,:)),
 [xreal, yreal] = realposition([48 10; 2 2]);
 hold on;
 h1 = plot(xreal, yreal, 'k-', 'LineWidth', 1.5);
+text(xreal - 150, yreal - 10, {'Æðµã', 'ÖÕµã'});
 
 [xtest_wifi, ytest_wifi] = realposition(cell2mat(wifiresult(2:3,:))); 
 h2 = plot(xtest_wifi, ytest_wifi, 'b-.o', 'LineWidth', 1.5);
