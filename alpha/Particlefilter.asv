@@ -6,8 +6,7 @@
 function result = Particlefilter(x, y, v, t, N)
 result = zeros(2,length(x));
 particles = zeros(4,N);
-n = 0; m = 1; k = 1;
-x_s = 0; y_s = 0;
+n = 0; m = 1;k = 1;
 while k <= length(x)
 if v(k) == 0
     n = n + 1;
@@ -36,7 +35,7 @@ particles(2,:) = normrnd(y_s, 1, [1 N]);
 particles(3,:) = normrnd(v(k) * sin(theta), 0.01, [1 N]);%x方向速度
 particles(4,:) = normrnd(v(k) * cos(theta), 0.01, [1 N]);%y方向速度
 weights = ones(1,N) / N;
-x_s = 0; y_s = 0;
+
 
 for i = k:length(x)
     if v(i) == 0
@@ -73,7 +72,7 @@ for i = k:length(x)
     result(1,m) = sum(particles(1,:) .* weights);
     result(2,m) = sum(particles(2,:) .* weights);
     m = m + 1;
-    k = i + 1;
+    k = i;
     
 end
 end

@@ -1,7 +1,7 @@
 function result = Improvedwknn(testdata, radiomap)
 %----------- init -----------%
 k = 3;
-weight = 0.8;
+weight = 0.54;
 result = cell(1,1);
 %-------improved wknn -------%
 testqty = size(testdata, 2);
