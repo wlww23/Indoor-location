@@ -14,5 +14,5 @@ set(h1, 'color', 'm', 'LineStyle', ':', 'LineWidth', 2);
 set(h2, 'color', 'b', 'LineStyle', '--', 'LineWidth', 2);
 set(h3, 'color', 'r', 'LineStyle', '-', 'LineWidth', 2);
 legend([h0 h1 h2 h3],'贝叶斯', 'KNN', 'WKNN', '改进近邻');
-xlabel('Positioning Error');
+xlabel('Positioning Error(m)');
 ylabel('The CDF of the Positioning Error');
