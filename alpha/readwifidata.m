@@ -64,5 +64,7 @@ for j = 1:size(rawdata_wifi,2)
         n = n + 1;
     end
 end
-rawdata_wifi(:, idx) = [];
+if idx ~= 0
+    rawdata_wifi(:, idx) = [];
+end
 save('rawdata_wifi.mat', 'rawdata_wifi');
